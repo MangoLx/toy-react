@@ -68,21 +68,27 @@ function workLoop(deadline) {
     requestIdleCallback(workLoop); // 继续在闲置下执行
 }
 
+function updateFunctionComponent(fiber) {
+    // todo 函数组件需要执行函数获得返回值
+    const children = [fiber.type(fiber.props)]; // 执行fiber.type函数（组件函数获得返回的jsx）获得子节点
+    reconcileChildren(fiber, children);
+}
+
+function updateHostComponent(fiber) {
+    if (!fiber.dom) {
+        fiber.dom = createDom(fiber)
+    }
+    reconcileChildren(fiber, fiber.props.children)
+}
+
 /**
  * @description: 一个处理单元任务，创建当前的真实dom结点，创建同一层的fiber node，返回child或者sibling
  * @param {*} fiber
  * @return {*}
  */
 function performUnitOfWork(fiber) {
-    // 1. 创建真实dom
-    if (!fiber.dom) {
-        // 不存在真实dom，创建一个
-        fiber.dom = createDom(fiber);
-    }
-
-    // 2. 创建构建fiber的子fiber树
-    const elements = fiber.props.children;
-    reconcileChildren(fiber, elements); // 构建子fiber树
+    const isFunctionComponent = fiber.type instanceof Function; // 判断是否是函数fiber
+    isFunctionComponent ? updateFunctionComponent(fiber) : updateHostComponent(fiber);
     
     // 返回下一个单元任务
     // 如果存在子节点，直接返回子节点
@@ -108,7 +114,6 @@ function reconcileChildren(wipFiber, elements) {
         const element = elements[index];
         let newFiber = null;
 
-        // TODO compare oldFiber to element
         // 整体对比逻辑
         // 1. 如果type也就是结点一样，只更新其中的内容
         // 2. 如果type不同，则需要创建一个新的dom结点
