@@ -1,12 +1,4 @@
-/*
- * @Author: liangxu liangxu@sparkedu.com
- * @Date: 2023-03-09 17:47:39
- * @LastEditors: liangxu liangxu@sparkedu.com
- * @LastEditTime: 2023-03-09 17:47:41
- * @FilePath: /toy-react/toy-react copy.js
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- */
-import { createElement, createDom } from './lib/dom.js';
+import { createElement, createDom } from '../lib/dom.js';
 
 // ! 3. fiber渲染
 function render(element, container) {

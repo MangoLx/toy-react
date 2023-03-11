@@ -1,5 +1,5 @@
-import { createElement, createDom, updateDom } from './lib/dom.js';
-import { EFFECT_TAG } from './lib/constants.js';
+import { createElement, createDom, updateDom } from '../lib/dom.js';
+import { EFFECT_TAG } from '../lib/constants.js';
 
 let nextUnitOfWork = null; // 下个单元任务
 let currentRoot = null; // 当前在使用的树

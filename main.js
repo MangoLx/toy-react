@@ -7,5 +7,4 @@ const element = Mango.createElement(
     Mango.createElement("div", { id: 'second' }, Mango.createElement("h1", {}, "一个h1"))
 );
 
-const root = document.querySelector('#root');
 Mango.render(element, root);
